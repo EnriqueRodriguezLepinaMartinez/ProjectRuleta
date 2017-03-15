@@ -5,6 +5,7 @@
  */
 package projectruleta;
 
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,8 +19,22 @@ public class projectRuleta extends javax.swing.JFrame {
      */
     Fichas nuevo = new Fichas();
     Apuestas unNumero = new Apuestas();
-    String respuesta;
+    int balotaAleatoria;
+    int numeroApostado;
     int cantidadRadioButton = 1;
+    boolean colorBalotaNow;
+    Random aleatorio = new Random();
+    
+            //FICHERO
+        AñadirFichero añfich = new AñadirFichero();
+        
+
+    //ARRAY DE COLORES DE LOS NUMEROS
+    boolean colorBalota[] = {true, true, false, true, false, true, false,
+        true, false, true, false, false, true, false, true, false,
+        true, false, true, true, false, true, false, true, false, true,
+        false, true, false, false, true, false, true, false, true,
+        false, true};
 
     public projectRuleta() {
         initComponents();
@@ -101,6 +116,7 @@ public class projectRuleta extends javax.swing.JFrame {
         jButton50 = new javax.swing.JButton();
         jButton51 = new javax.swing.JButton();
         jButton52 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.red);
@@ -393,6 +409,14 @@ public class projectRuleta extends javax.swing.JFrame {
 
         jButton52.setText("3º Tercio");
 
+        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
+        jTextField3.setToolTipText("");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -406,6 +430,8 @@ public class projectRuleta extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(243, 243, 243)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -533,16 +559,22 @@ public class projectRuleta extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton46)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton38)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton39))
-                .addGap(122, 122, 122)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton46)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton38)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton39))
+                        .addGap(67, 67, 67))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton50)
                     .addComponent(jButton52)
@@ -553,7 +585,7 @@ public class projectRuleta extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton37, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
@@ -616,12 +648,13 @@ public class projectRuleta extends javax.swing.JFrame {
                             .addComponent(jButton42, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton43, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButton3)
+                        .addComponent(jRadioButton2)
+                        .addComponent(jRadioButton4)
+                        .addComponent(jRadioButton5)))
                 .addGap(426, 426, 426))
         );
 
@@ -631,13 +664,15 @@ public class projectRuleta extends javax.swing.JFrame {
     //BOTÓN NUMERO 1 ROJO.
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-            if (nuevo.fichas >= 1 & cantidadRadioButton<=nuevo.fichas) {
-                jTextField2.setText(String.valueOf(unNumero.numero(cantidadRadioButton, nuevo.fichas)));
-                nuevo.fichas -= cantidadRadioButton;
-                jTextField1.setText(String.valueOf(nuevo.fichas));
-            }else{
-             JOptionPane.showMessageDialog(null, "Cantidad insuficiente, tienes "+nuevo.fichas+" fichas");
-            }
+        if (nuevo.fichas >= 1 & cantidadRadioButton <= nuevo.fichas) {
+            jTextField2.setText(String.valueOf(unNumero.numero(cantidadRadioButton, nuevo.fichas)));
+            nuevo.fichas -= cantidadRadioButton;
+            jTextField1.setText(String.valueOf(nuevo.fichas));
+            numeroApostado = 1;
+            colorBalotaNow = colorBalota[1];
+        } else {
+            JOptionPane.showMessageDialog(null, "Cantidad insuficiente, tienes " + nuevo.fichas + " fichas");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //BOTÓN PARA AGREGAR FICHAS A CAMBIO DE EUROS.
@@ -664,6 +699,14 @@ public class projectRuleta extends javax.swing.JFrame {
     // BOTÓN SELECCIÓN FICHAS NEGRAS.
     private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
         // TODO add your handling code here:
+        if (nuevo.fichas >= 1 & cantidadRadioButton <= nuevo.fichas) {
+            jTextField2.setText(String.valueOf(unNumero.numero(cantidadRadioButton, nuevo.fichas)));
+            nuevo.fichas -= cantidadRadioButton;
+            jTextField1.setText(String.valueOf(nuevo.fichas));
+            colorBalotaNow = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "Cantidad insuficiente, tienes " + nuevo.fichas + " fichas");
+        }
     }//GEN-LAST:event_jButton43ActionPerformed
 
     //CAJA DONDE SE ALMACENAN LAS FICHAS APOSTADAS.
@@ -700,11 +743,29 @@ public class projectRuleta extends javax.swing.JFrame {
     // BOTÓN PARA APOSTAR
     private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
         // TODO add your handling code here:
+        balotaAleatoria = (int) (aleatorio.nextDouble() * 36 + 1);
+        jTextField3.setText(String.valueOf(balotaAleatoria));
+        añfich.engadirTexto("escritura.txt", String.valueOf(balotaAleatoria));
+        if (numeroApostado == balotaAleatoria || colorBalotaNow == colorBalota[balotaAleatoria]) {
+            nuevo.fichas += unNumero.apuestaTotal * 36;
+            jTextField1.setText(String.valueOf(nuevo.fichas));
+            jTextField2.setText(String.valueOf(0));
+            JOptionPane.showMessageDialog(null, "Has ganado!" + unNumero.apuestaTotal * 36);
+            numeroApostado = 37;
+        } else {
+            jTextField2.setText(String.valueOf(0));
+            numeroApostado = 37;
+        }
     }//GEN-LAST:event_jButton46ActionPerformed
     //DEL 1 AL 18
     private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton40ActionPerformed
+
+    //CAJA DONDE APARECE EL NUMERO QUE ACABA DE SALIR
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -804,5 +865,6 @@ public class projectRuleta extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

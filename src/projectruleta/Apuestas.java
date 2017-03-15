@@ -5,7 +5,6 @@
  */
 package projectruleta;
 
-import javax.swing.JOptionPane;
 
 /**
  *
